@@ -17,7 +17,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
 
-  void _submit() async {
+  void _submit() {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
@@ -26,14 +26,16 @@ class _AuthScreenState extends State<AuthScreen> {
     _form.currentState!.save();
     try {
       if (_isLogin) {
-        final userCredential = await _firebase.signInWithEmailAndPassword(
+        final userCredential = _firebase.signInWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
       } else {
-        final userCredential = await _firebase.createUserWithEmailAndPassword(
+        final userCredential = _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {}
+      if (e.code == 'email-already-in-use') {
+        // TODO: A code goes in here
+      }
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -122,10 +124,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                 _isLogin = !_isLogin;
                               });
                             },
-                            style: TextButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.onPrimary,
-                            ),
                             child: Text(
                               _isLogin
                                   ? 'Create an account'
