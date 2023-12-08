@@ -12,7 +12,11 @@ class _UserImagePickerState extends State<UserImagePicker> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const CircleAvatar(),
+        CircleAvatar(
+          radius: 40,
+          backgroundColor: Colors.grey[300],
+          foregroundImage: ...,
+        ),
         TextButton.icon(
           onPressed: () {},
           icon: const Icon(Icons.image),
